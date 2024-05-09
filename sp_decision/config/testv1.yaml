@@ -1,0 +1,73 @@
+decision_tree_1:
+  - id: 1
+    variable: match_progress
+    condition: == 1
+    left_id: 3
+    right_id: 1
+    action: ""
+  # - id: 2
+  #   variable: key_from_char
+  #   condition: == 0
+  #   left_id: 1  
+  #   right_id: 3
+  #   action: ""
+  - id: 3
+    variable: match_remainder
+    condition:  "> 360"
+    left_id: 4  
+    right_id: 5
+    action: ""
+  - id: 4
+    variable: outpost
+    condition:  "< 500"
+    left_id: 6  
+    right_id: 7
+    action: ""
+  - id: 5
+    variable: match_remainder
+    condition:  "< 180"
+    left_id: 8  
+    right_id: 7
+    action: ""
+  - id: 6
+    variable: "sentry_hp"
+    condition:  "< 100"
+    left_id: 10  
+    right_id: 11
+    action: ""
+  - id: 7
+    variable: ""
+    condition:  ""
+    left_id: 1  
+    right_id: -1
+    action: "0attack-3.4-0"
+  - id: 8
+    variable: outpost
+    condition:  "< 800"
+    left_id: 6  
+    right_id: 7
+    action: ""
+  - id: 9
+    variable: "sentry_hp"
+    condition:  "< 100"
+    left_id: 12  
+    right_id: 11
+    action: ""
+  - id: 10
+    variable: ""
+    condition:  ""
+    left_id: 1  
+    right_id: -1
+    action: "0addblood-0-0-4.0057-2"
+  - id: 11
+    variable: ""
+    condition:  ""
+    left_id: 1  
+    right_id: -1
+    action: "0home_range_move-2.7-0-4.6-0-4.6-1.8-4.6-1.4"
+  - id: 12
+    variable: ""
+    condition:  ""
+    left_id: 1  
+    right_id: -1
+    action: "0addblood-0-0-4.0057-2.064"

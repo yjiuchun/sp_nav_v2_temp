@@ -1,0 +1,37 @@
+decision_tree_1:
+  - id: 1
+    variable: match_progress
+    condition: == 1
+    left_id: 3
+    right_id: 2
+    action: ""
+  - id: 2
+    variable: ""
+    condition: ""
+    left_id: -1
+    right_id: -1
+    action: 0observe-20-80
+  - id: 3
+    variable: match_remainder
+    condition: "> 300"
+    left_id: 4
+    right_id: 5
+    action: ""
+  - id: 4
+    variable: ""
+    condition: ""
+    left_id: 6
+    right_id: -1
+    action: 0symbol-1
+  - id: 5
+    variable: ""
+    condition: ""
+    left_id: 6
+    right_id: -1
+    action: 0rotate-1
+  - id: 6
+    variable: ""
+    condition: ""
+    left_id: -1
+    right_id: -1
+    action: 1remote_addblood
