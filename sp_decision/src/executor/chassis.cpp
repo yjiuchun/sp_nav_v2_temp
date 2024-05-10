@@ -80,7 +80,7 @@ namespace sp_decision
         double d=sqrt(pow(pos_x - localization_.pose.pose.position.x, 2) + pow(pos_y - localization_.pose.pose.position.y, 2));
         std::cout<<"d="<<d<<std::endl;
         // 距离小于0.2m认为到达
-        if (d< 0.2)
+        if (d< 0.18)
         {
             return 2;
         }
@@ -358,7 +358,8 @@ namespace sp_decision
             }
             break;
         case 2:
-            rotate_inplace();
+            send_goal(point[0], point[1]);
+            // rotate_inplace();
             action_status_ = 2;
             break;
         case 3:
