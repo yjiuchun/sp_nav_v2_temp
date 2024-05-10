@@ -80,7 +80,11 @@ namespace sp_decision
         double d=sqrt(pow(pos_x - localization_.pose.pose.position.x, 2) + pow(pos_y - localization_.pose.pose.position.y, 2));
         std::cout<<"d="<<d<<std::endl;
         // 距离小于0.2m认为到达
+<<<<<<< HEAD
         if (d< 0.18)
+=======
+        if (d< 0.15)
+>>>>>>> 605c8a84e16af85b385af08933ec7e261687ef63
         {
             return 2;
         }
