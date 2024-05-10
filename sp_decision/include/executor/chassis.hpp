@@ -94,7 +94,7 @@ namespace sp_decision
          * @param point 最终目标点
          * @param alternate_point 备用点
          */
-        void single_point_move(Eigen::Vector2d point, Eigen::Vector2d alternate_point, double* onarrive_flag);
+        void single_point_move(Eigen::Vector2d point, Eigen::Vector2d alternate_point);
         /**
          * @brief 基本功能5，追踪
          *

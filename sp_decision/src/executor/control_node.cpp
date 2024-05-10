@@ -38,6 +38,7 @@ namespace sp_decision
             {
                 std::cout << "x: " << point[0] << "  y:  " << point[1] << std::endl;
             }
+            blackboard_ptr_->add_point = points_[0];
         }
     }
     void ControlNode::decision_sub(const robot_msg::DecisionMsg &msg)
@@ -99,7 +100,7 @@ namespace sp_decision
         }
         else if (decision_ == "addblood") // todo 增加补给区补血指令
         {
-            chassis_ptr_->single_point_move(points_[0],points_[1],&blackboard_ptr_->on_addblood_area);
+            chassis_ptr_->single_point_move(points_[0],points_[1]);
             chassis_ptr_->rotate_state_ = ChassisExecutor::RotateState::ROTATE;
         }
         else if (decision_ == "home_range_move")
@@ -110,9 +111,7 @@ namespace sp_decision
             Eigen::Vector2d rt(param_list_[4], param_list_[5]);
             Eigen::Vector2d lt(param_list_[6], param_list_[7]);
             std::cout<<"1:"<<param_list_[0]<<","<<param_list_[1]<<std::endl;
-            // std::cout<<"2:"<<param_list_[2]<<","<<param_list_[3]<<std::endl;
-            // std::cout<<"3:"<<param_list_[4]<<","<<param_list_[5]<<std::endl;
-            // std::cout<<"4:"<<param_list_[6]<<","<<param_list_[7]<<std::endl;
+
 
             points.push_back(lb);
             points.push_back(rb);
@@ -182,8 +181,10 @@ namespace sp_decision
     }
     void ControlNode::add_blood()
     {
-        chassis_ptr_->single_point_move(points_[0],points_[1],&blackboard_ptr_->on_addblood_area);
-        chassis_ptr_->rotate_state_ = ChassisExecutor::RotateState::ROTATE;    }
+        chassis_ptr_->single_point_move(points_[0],points_[1]);
+        chassis_ptr_->rotate_state_ = ChassisExecutor::RotateState::ROTATE;
+
+    }
     void ControlNode::reach_start_region()
     {
         std::vector<Eigen::Vector2d> points_1;

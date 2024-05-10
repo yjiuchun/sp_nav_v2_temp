@@ -375,7 +375,7 @@ namespace sp_decision
         }
     }
     // 基本动作4——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-    void ChassisExecutor::single_point_move(Eigen::Vector2d point, Eigen::Vector2d alternate_point,double* onarrive_flag)
+    void ChassisExecutor::single_point_move(Eigen::Vector2d point, Eigen::Vector2d alternate_point)
     {
         ROS_INFO("status------%d",action_status_);
         switch (action_status_)
@@ -400,7 +400,6 @@ namespace sp_decision
             {
                 rotate_inplace();
                 action_status_ = 2;
-                *onarrive_flag = 1;
 
             }
             else if (send_goal(point[0], point[1]) == 0)
@@ -417,7 +416,8 @@ namespace sp_decision
             }
             break;
         case 2:
-            rotate_inplace();
+            send_goal(point[0], point[1]);
+            // rotate_inplace();
             action_status_ = 2;
             break;
         case 3:

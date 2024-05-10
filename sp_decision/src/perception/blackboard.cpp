@@ -38,6 +38,7 @@ namespace sp_decision
     //     }
     //     goal_status_mutex.unlock();
     // }
+
     void Blackboard::decision_sub(const robot_msg::DecisionMsg &decision)
     {
         if (decision.type == 0)
@@ -182,6 +183,15 @@ namespace sp_decision
         Blackboard::sentry_status.robot_pose = *msg;
         Blackboard::sentry_status.robot_pos(0) = msg->pose.pose.position.x;
         Blackboard::sentry_status.robot_pos(1) = msg->pose.pose.position.y;
+        double d=sqrt(pow(add_point - msg->pose.pose.position.x, 2) + pow(add_point - msg->pose.pose.position.y, 2));
+        if(d < 0.2)
+        {
+            on_addblood_area = 1;
+        }
+        else
+        {
+            on_addblood_area = 0;
+        }
         sentry_status_cbk_mutex.unlock();
     }
 

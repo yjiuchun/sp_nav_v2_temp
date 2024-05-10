@@ -64,6 +64,9 @@ namespace sp_decision
         double buy_bullet_remain_time = 0;
         double sentry_bullet = 400;
         double money = 0;
+        Eigen::Vector2d add_point; //哨兵回血点坐标，用于localization回调函数判断是否处于回血点，进而买弹
+        double sentry_all_bullet_num = 400; //传给下位机的总发弹量： = 当前总发弹量 + 购买弹量
+        double sentry_attackable = 1;    //哨兵发射机构是否断电
 
         ros::Time time_received_target_;
         /**
@@ -171,7 +174,6 @@ namespace sp_decision
 
     private:
         tools::logger::Ptr logger_ptr_;
-
         ros::NodeHandle nh_;
         ros::Subscriber referee_info_sub_;
         ros::Subscriber enemy_hp_sub_;
@@ -180,7 +182,6 @@ namespace sp_decision
         ros::Subscriber team_hp_sub_;   // 接收队友血量
         ros::Publisher enemy_status_pub_;
         ros::Subscriber decision_sub_;
-
         ros::Subscriber referee_data_sub_;
         ros::Subscriber move_base_status_sub_;
         ros::Subscriber cmd_vel_sub_;
