@@ -2,7 +2,7 @@
 sleep 5
 source /opt/ros/noetic/setup.bash
 source /home/rm/ws_livox2/devel/setup.bash
-source /home/rm/catkin_ws/devel/setup.bash
+source /home/rm/sp_nav/devel/setup.bash
 export ROS_PACKAGE_PATH=/home/rm/ws_livox2/src:$ROS_PACKAGE_PATH
 export ROS_PACKAGE_PATH=/home/rm/catkin_ws/src:$ROS_PACKAGE_PATH
 gnome-terminal -- bash -c "roslaunch livox_ros_driver2 msg_MID360.launch "& sleep 5s

@@ -55,6 +55,8 @@ namespace sp_decision
         };
         ChassisExecutor(const tools::logger::Ptr &logger_ptr, const sp_decision::Blackboard::Ptr &blackboard_ptr);
         int send_goal(double pos_x, double pos_y);           // 0为失败，1为进行中，2为成功到达
+        int send_goal_dis(double pos_x, double pos_y,double dis); //can select on arrave dis
+
         void directly_send_goal(double pos_x, double pos_y); // 直接发布目标点
         void robot_state_sub(const robot_msg::RobotStateMsg &robot_state);
         void rotate_state_sub(const robot_msg::RobotStateMsg &rotate_state);

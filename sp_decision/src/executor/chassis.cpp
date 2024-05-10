@@ -80,7 +80,66 @@ namespace sp_decision
         double d=sqrt(pow(pos_x - localization_.pose.pose.position.x, 2) + pow(pos_y - localization_.pose.pose.position.y, 2));
         std::cout<<"d="<<d<<std::endl;
         // 距离小于0.2m认为到达
-        if (d< 0.2)
+        if (d< 0.20)
+        {
+            return 2;
+        }
+        else
+        {
+            if (target_pose_.pose.position.x == pos_x && target_pose_.pose.position.y == pos_y)
+            {
+                ros::Duration time_interval = ros::Time::now() - last_judge_time_;
+                double time_interval_ms = time_interval.toSec() * 1000.0; // 计算时间间隔
+                if (time_interval_ms > 100)                               // 每100ms进行一次判断
+                {
+                    if ((cmd_vel_.linear.x == last_cmd_vel_.linear.x && cmd_vel_.linear.y == last_cmd_vel_.linear.y) ||
+                        (cmd_vel_.linear.x == 0 && cmd_vel_.linear.y == 0))
+                    {
+                        last_judge_time_ = ros::Time::now();
+                        last_cmd_vel_.linear.x = cmd_vel_.linear.x;
+                        last_cmd_vel_.linear.y = cmd_vel_.linear.y;
+                        directly_send_goal(pos_x, pos_y);
+                        return 0;
+                    }
+                    else
+                    {
+                        last_judge_time_ = ros::Time::now();
+                        last_cmd_vel_.linear.x = cmd_vel_.linear.x;
+                        last_cmd_vel_.linear.y = cmd_vel_.linear.y;
+                        directly_send_goal(pos_x, pos_y);
+                        return 1;
+                    }
+                }
+                else
+                {
+                    if (nav_status_ == 0)
+                    {
+                        nav_status_ = 0;
+                        return 0;
+                    }
+                    else
+                    {
+                        return 1;
+                    }
+                }
+            }
+            else
+            {
+                last_judge_time_ = ros::Time::now();
+                last_cmd_vel_.linear.x = cmd_vel_.linear.x;
+                last_cmd_vel_.linear.y = cmd_vel_.linear.y;
+                directly_send_goal(pos_x, pos_y);
+                nav_status_ = 1;
+                return 1;
+            }
+        }
+    }
+    int ChassisExecutor::send_goal_dis(double pos_x, double pos_y,double dis)
+    {
+        double d=sqrt(pow(pos_x - localization_.pose.pose.position.x, 2) + pow(pos_y - localization_.pose.pose.position.y, 2));
+        std::cout<<"d="<<d<<std::endl;
+        // 距离小于0.2m认为到达
+        if (d< dis)
         {
             return 2;
         }
@@ -158,7 +217,7 @@ namespace sp_decision
         case 0: // 初始化
             target = point_generate(points);
             wait_time_flag = 0;
-            if (send_goal(target[0], target[1]) == 1)
+            if (send_goal_dis(target[0], target[1], 0.3) == 1)
             {
                 action_status_ = 2;
                 last_target = target;
@@ -171,7 +230,7 @@ namespace sp_decision
             break;
         case 1: // 搜寻可行域
             target = point_generate(points);
-            if (send_goal(target[0], target[1]) == 1)
+            if (send_goal_dis(target[0], target[1], 0.3) == 1)
             {
                 action_status_ = 2;
                 last_target = target;
@@ -183,7 +242,7 @@ namespace sp_decision
             }
             break;
         case 2: // 前往
-            result = send_goal(last_target[0], last_target[1]);
+            result = send_goal_dis(last_target[0], last_target[1], 0.3);
             if (result == 0)
             {
                 rotate_inplace();
@@ -196,7 +255,7 @@ namespace sp_decision
             break;
         case 3: // 到达
         {
-            send_goal(last_target[0], last_target[1]);
+            send_goal_dis(last_target[0], last_target[1], 0.3);
             if(!wait_time_flag){
                 range_wait_time_ = ros::Time::now();
             }

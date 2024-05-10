@@ -118,11 +118,10 @@ namespace sp_decision
             points.push_back(rb);
             points.push_back(rt);
             points.push_back(lt);
-            chassis_ptr_->robot_state_ = ChassisExecutor::RobotState::MOVE;
+            chassis_ptr_->robot_state_ = ChassisExecutor::RobotState::SLOW;
             chassis_ptr_->rotate_state_ = ChassisExecutor::RotateState::ROTATE;
 
             chassis_ptr_->range_move(points);      // todo 基地前巡逻区范围顶点
-            std::cout<<"robot_state_:"<<chassis_ptr_->action_status_<<std::endl;
 
         }
         else if (decision_ == "attack")         //增加进攻指令
