@@ -38,7 +38,7 @@ namespace sp_decision
             {
                 std::cout << "x: " << point[0] << "  y:  " << point[1] << std::endl;
             }
-            blackboard_ptr_->add_point = points_[0];
+            blackboard_ptr_->add_point = points_[Point_Yaml::ADD_area];
         }
     }
     void ControlNode::decision_sub(const robot_msg::DecisionMsg &msg)
@@ -74,7 +74,7 @@ namespace sp_decision
         for (int i = 0; i < param_list_.size(); i++)
             log_msg << "-" << param_list_[i];
         logger_ptr_->logInfo(log_msg);
-        std::cout<<"remain_time :"<<blackboard_ptr_->buy_bullet_remain_time<<std::endl;
+        std::cout<<"remain_time :"<<(blackboard_ptr_->buy_bullet_remain_time-(blackboard_ptr_->buy_bullet_time - blackboard_ptr_->match_remainder))<<std::endl;
         ROS_INFO("decision: %s", decision_.c_str());
         if (decision_ == "null")
             return;
@@ -91,8 +91,11 @@ namespace sp_decision
         }
         else if (decision_ == "buy_bullet") // todo 增加买弹指令
         {
-            // todo buy bullet
-            blackboard_ptr_->buy_bullet_time = blackboard_ptr_->match_remainder + 10;
+            if(blackboard_ptr_->buy_bullet_remain_time < 1)
+            {
+                blackboard_ptr_->sentry_all_bullet_num += param_list_[2];
+            }
+            blackboard_ptr_->buy_bullet_time = blackboard_ptr_->match_remainder;
             blackboard_ptr_->buy_bullet_remain_time = param_list_[1];
         }
         else if (decision_ == "remote_addblood") // todo 增加回血指令
@@ -100,32 +103,30 @@ namespace sp_decision
         }
         else if (decision_ == "addblood") // todo 增加补给区补血指令
         {
-            chassis_ptr_->single_point_move(points_[0],points_[1]);
+            chassis_ptr_->single_point_move(points_[Point_Yaml::ADD_area],points_[Point_Yaml::ADD_AREA_ALTERNATE]);
             chassis_ptr_->rotate_state_ = ChassisExecutor::RotateState::ROTATE;
         }
         else if (decision_ == "home_range_move")
         {
             std::vector<Eigen::Vector2d> points;
-            Eigen::Vector2d lb(param_list_[0], param_list_[1]);
-            Eigen::Vector2d rb(param_list_[2], param_list_[3]);
-            Eigen::Vector2d rt(param_list_[4], param_list_[5]);
-            Eigen::Vector2d lt(param_list_[6], param_list_[7]);
-            std::cout<<"1:"<<param_list_[0]<<","<<param_list_[1]<<std::endl;
-
-
+            Eigen::Vector2d lb(points_[Point_Yaml::RANGE_AREA1].x(),points_[Point_Yaml::RANGE_AREA1].y());
+            Eigen::Vector2d rb(points_[Point_Yaml::RANGE_AREA2].x(),points_[Point_Yaml::RANGE_AREA2].y());
+            Eigen::Vector2d rt(points_[Point_Yaml::RANGE_AREA3].x(),points_[Point_Yaml::RANGE_AREA3].y());
+            Eigen::Vector2d lt(points_[Point_Yaml::RANGE_AREA4].x(),points_[Point_Yaml::RANGE_AREA4].y());
+            // std::cout<<"1:"<<param_list_[0]<<","<<param_list_[1]<<std::endl;
+            // std::cout<<"here"<<std::endl;
             points.push_back(lb);
             points.push_back(rb);
             points.push_back(rt);
             points.push_back(lt);
             chassis_ptr_->robot_state_ = ChassisExecutor::RobotState::SLOW;
             chassis_ptr_->rotate_state_ = ChassisExecutor::RotateState::ROTATE;
-
             chassis_ptr_->range_move(points);      // todo 基地前巡逻区范围顶点
 
         }
         else if (decision_ == "attack")         //增加进攻指令
         {
-            chassis_ptr_->send_goal(param_list_[0],param_list_[1]);
+            chassis_ptr_->send_goal(points_[Point_Yaml::ATTACK].x(),points_[Point_Yaml::ATTACK].y());
             chassis_ptr_->rotate_state_ = ChassisExecutor::RotateState::ROTATE;
         }
 

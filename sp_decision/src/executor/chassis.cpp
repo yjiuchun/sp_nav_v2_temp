@@ -66,6 +66,7 @@ namespace sp_decision
             break;
         }
         }
+        sentry_cmd_vel.linear.z = blackboard_ptr_->sentry_all_bullet_num;
         sentry_cmd_vel_pub_.publish(sentry_cmd_vel);
         nav_cmd_vel_cbk_mutex.unlock();
     }

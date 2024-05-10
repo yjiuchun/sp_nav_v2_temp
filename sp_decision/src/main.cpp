@@ -21,6 +21,7 @@ int main(int argc, char **argv)
     decison_tree_0.print_tree();
     decison_tree_0.run_start();
     control_node->run_start();
+
     ros::Rate loop_rate(10);
     while (ros::ok)
     {
@@ -32,6 +33,8 @@ int main(int argc, char **argv)
         // int n = chassis->send_goal(point_1[0], point_1[1]);
         // ROS_INFO("status------%d", n);
         // chassis->single_point_move(point_1, point_2);
+        // std::cout<<chassis->action_status_<<std::endl;
+        // chassis->range_move(points);
         loop_rate.sleep();
         ros::spinOnce();
     }

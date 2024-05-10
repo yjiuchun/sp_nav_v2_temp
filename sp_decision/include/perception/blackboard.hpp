@@ -62,10 +62,10 @@ namespace sp_decision
         double on_addblood_area = 0; // 是否在加血区域，用于买弹判断 1:是 0:否
         double buy_bullet_time = 0;
         double buy_bullet_remain_time = 0;
-        double sentry_bullet = 400;
+        double sentry_bullet = 400;   //哨兵当前允许发弹量
         double money = 0;
         Eigen::Vector2d add_point; //哨兵回血点坐标，用于localization回调函数判断是否处于回血点，进而买弹
-        double sentry_all_bullet_num = 400; //传给下位机的总发弹量： = 当前总发弹量 + 购买弹量
+        double sentry_all_bullet_num = 0; //传给下位机的总发弹量： = 历史总允许发弹量 + 购买弹量
         double sentry_attackable = 1;    //哨兵发射机构是否断电
 
         ros::Time time_received_target_;

@@ -39,8 +39,7 @@ namespace sp_decision
         b = 3;
         c = 0;
         num = 0;
-        yaml_reader_ptr_ = std::make_shared<tools::yaml_reader>(ros::package::getPath("sp_decision") + "/config/testv2.yaml");
-        ;
+        yaml_reader_ptr_ = std::make_shared<tools::yaml_reader>(ros::package::getPath("sp_decision") + "/config/testv3.yaml");
         blackboard_ptr_ = blackboard_ptr;
         node_ptr_init(); // 生成决策图
     }
@@ -150,7 +149,7 @@ namespace sp_decision
                     {
                         dt_node.variable_ptr = &blackboard_ptr_->team_hp[6];
                     }
-                    if (variable == "bullet")
+                    if (variable == "sentry_bullet")
                     {
                         dt_node.variable_ptr = &blackboard_ptr_->sentry_bullet;
                     }
@@ -158,13 +157,17 @@ namespace sp_decision
                     {
                         dt_node.variable_ptr = &blackboard_ptr_->money;
                     }          
-                    if (variable == "bullet_remain_time")
+                    if (variable == "buy_bullet_remain_time")
                     {
                         dt_node.variable_ptr = &blackboard_ptr_->buy_bullet_remain_time;
                     }    
                     if (variable == "on_addblood_area")
                     {
                         dt_node.variable_ptr = &blackboard_ptr_->on_addblood_area;
+                    }   
+                    if (variable == "sentry_attackable")
+                    {
+                        dt_node.variable_ptr = &blackboard_ptr_->sentry_attackable;
                     }   
                 }
                 nodes_id_vector.push_back(dt_node.id);

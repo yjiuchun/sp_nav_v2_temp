@@ -45,6 +45,20 @@ namespace sp_decision
          * decision_status_==3为到达
          */
         void reach_start_region();
+       /**
+         * @brief 加载points.yaml的含义
+         * decision_status_==3为到达
+         */
+        enum Point_Yaml
+        {
+            ADD_area,
+            ADD_AREA_ALTERNATE,
+            ATTACK,
+            RANGE_AREA1,
+            RANGE_AREA2,
+            RANGE_AREA3,
+            RANGE_AREA4,
+        };
 
     private:
         std::vector<Eigen::Vector2d> points_; // 读取点集列表

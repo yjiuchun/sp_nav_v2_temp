@@ -1,7 +1,29 @@
 points:
+# 1:add_area
   - id: 1
     x: 4
     y: 2
+# 2:add_area_alternate
   - id: 2
     x: 4
+    y: 1
+# 3:attack_area
+  - id: 3
+    x: 4
+    y: 2
+# 4:range_area1
+  - id: 4
+    x: -1
+    y: 1
+# 5:range_area2
+  - id: 5
+    x: 1
+    y: -1
+# 6:range_area3
+  - id: 6
+    x: -1
+    y: -1
+# 7:range_area4
+  - id: 7
+    x: 1
     y: 1

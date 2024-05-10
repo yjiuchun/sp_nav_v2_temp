@@ -54,7 +54,7 @@ decision_tree_1:
     right_id: -1
     action: "1addblood-1"
   - id: 10
-    variable: bullet
+    variable: sentry_bullet
     condition: "< 10"
     left_id: 11
     right_id: 17
@@ -90,7 +90,7 @@ decision_tree_1:
     right_id: -1
     action: "1addblood-1"
   - id: 16
-    variable: bullet
+    variable: sentry_bullet
     condition: "< 10"
     left_id: 19
     right_id: 18

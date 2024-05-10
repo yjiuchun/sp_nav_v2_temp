@@ -60,7 +60,10 @@ namespace sp_decision
         match_remainder = static_cast<double>(sp_decision::Blackboard::match_status.stage_remain_time);
         if(buy_bullet_remain_time>0)
             {
-                buy_bullet_remain_time = buy_bullet_time - match_remainder;
+                if((buy_bullet_time - match_remainder)>buy_bullet_remain_time)
+                {
+                    buy_bullet_remain_time = 0;
+                }
             }
         // 判断比赛进程
         if (match_status.game_progress < 4)
@@ -183,7 +186,7 @@ namespace sp_decision
         Blackboard::sentry_status.robot_pose = *msg;
         Blackboard::sentry_status.robot_pos(0) = msg->pose.pose.position.x;
         Blackboard::sentry_status.robot_pos(1) = msg->pose.pose.position.y;
-        double d=sqrt(pow(add_point - msg->pose.pose.position.x, 2) + pow(add_point - msg->pose.pose.position.y, 2));
+        double d=sqrt(pow(add_point.x() - msg->pose.pose.position.x, 2) + pow(add_point.y() - msg->pose.pose.position.y, 2));
         if(d < 0.2)
         {
             on_addblood_area = 1;

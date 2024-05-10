@@ -1,0 +1,91 @@
+decision_tree_1:
+  - id: 1
+    variable: match_progress
+    condition: == 1
+    left_id: 2
+    right_id: 1
+    action: ""
+  - id: 2
+    variable: sentry_hp
+    condition:  < 150
+    left_id: 3
+    right_id: 4
+    action: ""
+  - id: 3
+    variable: ""
+    condition:  ""
+    left_id: 1
+    right_id: -1
+    action: "1addblood-1"
+  - id: 4
+    variable: sentry_bullet
+    condition:  "< 10"
+    left_id: 5
+    right_id: 8
+    action: ""
+  - id: 5
+    variable: money
+    condition:  "> 300"
+    left_id: 15
+    right_id: 8
+    action: ""
+  - id: 6
+    variable: on_addblood_area
+    condition:  "== 1"
+    left_id: 7
+    right_id: 8
+    action: ""
+  - id: 7
+    variable: ""
+    condition:  ""
+    left_id: 1
+    right_id: -1
+    action: "1buy_bullet-1-60-50"
+  - id: 8
+    variable: sentry_attackable
+    condition:  "== 0"
+    left_id: 3
+    right_id: 9
+    action: ""
+  - id: 9
+    variable: match_remainder
+    condition:  "> 350"
+    left_id: 10
+    right_id: 13
+    action: ""
+  - id: 10
+    variable: outpost
+    condition: "< 500"
+    left_id: 11
+    right_id: 12
+    action: ""
+  - id: 11
+    variable: ""
+    condition:  ""
+    left_id: 1
+    right_id: -1
+    action: "1home_range_move-1"
+  - id: 12
+    variable: ""
+    condition:  ""
+    left_id: 1
+    right_id: -1
+    action: "1attack-1"
+  - id: 13
+    variable: match_remainder
+    condition:  "> 280"
+    left_id: 14
+    right_id: 11
+    action: ""
+  - id: 14
+    variable: outpost
+    condition:  "< 800"
+    left_id: 11
+    right_id: 12
+    action: ""
+  - id: 15
+    variable: buy_bullet_remain_time
+    condition:  "< 1"
+    left_id: 6
+    right_id: 8
+    action: ""
