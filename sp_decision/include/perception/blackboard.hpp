@@ -27,6 +27,7 @@
 #include <robot_msg/Armor.h>
 #include <robot_msg/DecisionMsg.h>
 #include <tools/log.hpp>
+#include <robot_msg/shoot.h>
 namespace sp_decision
 {
     class Blackboard
@@ -45,6 +46,7 @@ namespace sp_decision
         std::mutex referee_info_mutex;
         std::mutex enemy_status_cbk_mutex;
         std::mutex team_status_cbk_mutex;
+        std::mutex robot_shoot_cbk_mutex;
         /**
          * @brief 提供给decision_node的接口
          * @todo 优化结构，整理冗余
@@ -60,13 +62,15 @@ namespace sp_decision
         
         //add
         double on_addblood_area = 0; // 是否在加血区域，用于买弹判断 1:是 0:否
-        double buy_bullet_time = 0;
-        double buy_bullet_remain_time = 0;
+        double buy_bullet_time = 0;         //哨兵上次买弹的比赛时间，用于确定哨兵下一次可以买弹的时间。
+        double buy_bullet_remain_time = 0; //允许哨兵下次买弹的倒计时
         double sentry_bullet = 400;   //哨兵当前允许发弹量
-        double money = 0;
-        Eigen::Vector2d add_point; //哨兵回血点坐标，用于localization回调函数判断是否处于回血点，进而买弹
+        double money = 0;              //队伍目前总经济
+        double sentry_redeemed_17mm = 0;  //接收下位机发送的哨兵已购买总发弹量。
         double sentry_all_bullet_num = 0; //传给下位机的总发弹量： = 历史总允许发弹量 + 购买弹量
         double sentry_attackable = 1;    //哨兵发射机构是否断电
+
+        Eigen::Vector2d add_point; //哨兵回血点坐标，用于localization回调函数判断是否处于回血点，进而买弹
 
         ros::Time time_received_target_;
         /**
@@ -187,6 +191,7 @@ namespace sp_decision
         ros::Subscriber cmd_vel_sub_;
         ros::Subscriber goal_status_sub_;
         ros::Subscriber armor_sub_;
+        ros::Subscriber robot_shoot_sub_;
 
         void enemy_status_advertise(); // 发布无敌状态的目标
         void robot_init();             // 初始化机器人列表
@@ -196,6 +201,7 @@ namespace sp_decision
         void sentry_pose_callback(const nav_msgs::Odometry::ConstPtr msg);
         void enemy_pose_callback(const robot_msg::Armor::ConstPtr &msg);
         void decision_sub(const robot_msg::DecisionMsg &decision);
+        void robot_shoot_callback(const robot_msg::shoot::ConstPtr &msg);
     };
 } // namespace sp_decision
 #endif

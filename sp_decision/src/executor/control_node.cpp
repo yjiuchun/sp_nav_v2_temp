@@ -93,7 +93,7 @@ namespace sp_decision
         {
             if(blackboard_ptr_->buy_bullet_remain_time < 1)
             {
-                blackboard_ptr_->sentry_all_bullet_num += param_list_[2];
+                blackboard_ptr_->sentry_all_bullet_num = blackboard_ptr_->sentry_redeemed_17mm + param_list_[2];
             }
             blackboard_ptr_->buy_bullet_time = blackboard_ptr_->match_remainder;
             blackboard_ptr_->buy_bullet_remain_time = param_list_[1];

@@ -18,10 +18,15 @@ namespace sp_decision
             nh_.subscribe("/enemy_pose", 1, &Blackboard::enemy_pose_callback, this);
         decision_sub_ =
             nh_.subscribe("/sentry/decision", 10, &Blackboard::decision_sub, this);
+        robot_shoot_sub_ = 
+            nh_.subscribe("robot_shoot", 10, &Blackboard::robot_shoot_callback, this);
         enemy_status_pub_ =
             nh_.advertise<robot_msg::EnemyStage>("/enemy_stage", 1);
         log_pub_ =
             nh_.advertise<robot_msg::EnemyStage>("/sentry/log", 1);
+
+
+
     }
 
     // void Blackboard::GoalStatusCallback(const actionlib_msgs::GoalStatusArray::ConstPtr &msg)
@@ -206,6 +211,16 @@ namespace sp_decision
         Blackboard::enemy_status[num - 1].robot_pos(1) = msg->pose.position.y;
         enemy_status[num - 1].pos_update_time = ros::Time::now();
         enemy_status_cbk_mutex.unlock();
+    }
+    void Blackboard::robot_shoot_callback(const robot_msg::shoot::ConstPtr &msg)
+    {
+        robot_shoot_cbk_mutex.lock();
+        Blackboard::sentry_attackable = msg->shoot_power;
+        Blackboard::sentry_bullet = msg->allowance_17mm;
+        Blackboard::sentry_redeemed_17mm = msg->redeemed_17mm;
+        Blackboard::money = msg->remain_gold;
+        robot_shoot_cbk_mutex.unlock();
+
     }
     // void Blackboard::CmdVelDataCallback(const geometry_msgs::Twist &msg)
     // {

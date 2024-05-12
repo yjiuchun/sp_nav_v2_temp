@@ -12,7 +12,7 @@
 #include <robot_msg/RefereeInfoMsg.h>
 #include <robot_msg/RobotHP.h>
 #include <robot_msg/CmdGimbal.h>
-
+#include <robot_msg/shoot.h>
 namespace sentry_communicator
 {
     struct ChassisCommand
@@ -56,9 +56,12 @@ namespace sentry_communicator
 
 
         ros::Publisher referee_info_pub_;
-        robot_msg::RefereeInfoMsg 
-            referee_info_msg_;
+        robot_msg::RefereeInfoMsg referee_info_msg_;
 
+        //哨兵发射相关数据
+        ros::Publisher robot_shoot_pub_;
+        robot_msg::shoot robot_shoot_msg_;
+        
         ros::Publisher robot_EnemyHP_pub_;
         robot_msg::RobotHP robot_EnemyHP_msg_;
         // 上半数据更新标记

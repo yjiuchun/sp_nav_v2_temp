@@ -59,6 +59,7 @@ add_message_files(
    CmdGimbal.msg
    Log.msg
    DecisionMsg.msg
+   shoot.msg
 )
 
 ## Generate services in the 'srv' folder

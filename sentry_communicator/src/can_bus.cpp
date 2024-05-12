@@ -4,7 +4,7 @@
 #define MAX_ANGLE 180.f
 #define MIN_ANGLE -180.f
 
-#define DEBUG // 调试时打开,防止和虚拟裁判系统冲突
+// #define DEBUG // 调试时打开,防止和虚拟裁判系统冲突
 
 namespace sentry_communicator
 {
@@ -15,6 +15,7 @@ namespace sentry_communicator
         referee_info_pub_ = root_nh.advertise<robot_msg::RefereeInfoMsg>("referee_info",1000);
         robot_EnemyHP_pub_ = root_nh.advertise<robot_msg::RobotHP>("Enemy_robot_HP",1000);
         robot_TeamHP_pub_ = root_nh.advertise<robot_msg::RobotHP>("Team_robot_HP",1000);
+        robot_shoot_pub_ = root_nh.advertise<robot_msg::shoot>("robot_shoot",1000);
 
         while (!socket_can_.open(bus_name, boost::bind(&CanBus::frameCallback, this, _1), thread_priority) && ros::ok())
             ros::Duration(.5).sleep();
@@ -42,11 +43,15 @@ namespace sentry_communicator
         uint16_t vel_x = float2uint(command_velocity.linear.x, MIN_SPEED, MAX_SPEED, 12);
         uint16_t vel_y = float2uint(command_velocity.linear.y, MIN_SPEED, MAX_SPEED, 12);
         uint16_t vel_z = float2uint(command_velocity.angular.z, MIN_SPEED, MAX_SPEED, 12);
+        uint16_t buy_bullet = command_velocity.linear.z;
+
         chassis_frame_.data[0] = static_cast<uint8_t>(vel_x >> 4u);
         chassis_frame_.data[1] = static_cast<uint8_t>((vel_x & 0xF) << 4u | vel_y >> 8u);
         chassis_frame_.data[2] = static_cast<uint8_t>(vel_y);
         chassis_frame_.data[3] = static_cast<uint8_t>(vel_z >> 4u);
         chassis_frame_.data[4] = static_cast<uint8_t>((vel_z & 0xF) << 4u | 0xF);
+        chassis_frame_.data[5] = static_cast<uint8_t>(buy_bullet >> 8);
+        chassis_frame_.data[6] = static_cast<uint8_t>(buy_bullet);
 
     	socket_can_.write(&chassis_frame_);
 
@@ -71,7 +76,6 @@ namespace sentry_communicator
         gimbal_frame_.data[7] = static_cast<uint8_t>(pitch_upper_limit);
 
     	socket_can_.write(&gimbal_frame_);
-
     }
 
     void CanBus::cmdChassisCallback(const geometry_msgs::Twist::ConstPtr &msg)
@@ -201,6 +205,16 @@ namespace sentry_communicator
             referee_info_msg_.key = (char)frame.data[7];
 #ifndef DEBUG
             referee_info_pub_.publish(referee_info_msg_);
+#endif 
+        }
+        if(frame.can_id == 0x18E){
+
+            robot_shoot_msg_.shoot_power = frame.data[0];
+            robot_shoot_msg_.allowance_17mm = (frame.data[1] << 8u | frame.data[2]);
+            robot_shoot_msg_.remain_gold = (frame.data[3] << 8u | frame.data[4]);
+            robot_shoot_msg_.redeemed_17mm = (frame.data[5] << 8u | frame.data[6]);
+#ifndef DEBUG
+            robot_shoot_pub_.publish(robot_shoot_msg_);
 #endif 
             // Robot_ID = frame.data[0];
             // Keyboard = frame.data[1];
