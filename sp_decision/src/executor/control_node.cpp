@@ -70,11 +70,14 @@ namespace sp_decision
     void ControlNode::execute_decision()
     {
         std::stringstream log_msg;
-        // log_msg << "decision: " << decision_;
+        log_msg << "decision: " << decision_;
         for (int i = 0; i < param_list_.size(); i++)
-            log_msg << "-" << param_list_[i];
+            log_msg << "-" << decision_;
+
         logger_ptr_->logInfo(log_msg);
         std::cout<<"remain_time :"<<(blackboard_ptr_->buy_bullet_remain_time-(blackboard_ptr_->buy_bullet_time - blackboard_ptr_->match_remainder))<<std::endl;
+        std::cout<<"wait_time :"<<(blackboard_ptr_->buy_bullet_wait_time-(blackboard_ptr_->buy_bullet_time - blackboard_ptr_->match_remainder))<<std::endl;
+
         ROS_INFO("decision: %s", decision_.c_str());
         if (decision_ == "null")
             return;
@@ -97,6 +100,7 @@ namespace sp_decision
             }
             blackboard_ptr_->buy_bullet_time = blackboard_ptr_->match_remainder;
             blackboard_ptr_->buy_bullet_remain_time = param_list_[1];
+            blackboard_ptr_->buy_bullet_wait_time = param_list_[3];
         }
         else if (decision_ == "remote_addblood") // todo 增加回血指令
         {
@@ -105,6 +109,7 @@ namespace sp_decision
         {
             chassis_ptr_->single_point_move(points_[Point_Yaml::ADD_area],points_[Point_Yaml::ADD_AREA_ALTERNATE]);
             chassis_ptr_->rotate_state_ = ChassisExecutor::RotateState::ROTATE;
+            chassis_ptr_->robot_state_ = ChassisExecutor::RobotState::SLOW;
         }
         else if (decision_ == "home_range_move")
         {
@@ -127,7 +132,9 @@ namespace sp_decision
         else if (decision_ == "attack")         //增加进攻指令
         {
             chassis_ptr_->send_goal(points_[Point_Yaml::ATTACK].x(),points_[Point_Yaml::ATTACK].y());
-            chassis_ptr_->rotate_state_ = ChassisExecutor::RotateState::ROTATE;
+            chassis_ptr_->rotate_state_ = ChassisExecutor::RotateState::UPSLOPW;
+            chassis_ptr_->robot_state_ = ChassisExecutor::RobotState::SLOW;
+
         }
 
     }

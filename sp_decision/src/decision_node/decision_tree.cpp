@@ -30,7 +30,7 @@ namespace sp_decision
     {
         printf("用户退出...\n");
     }
-    decision_tree::decision_tree(const sp_decision::Blackboard::Ptr &blackboard_ptr)
+    decision_tree::decision_tree(const sp_decision::Blackboard::Ptr &blackboard_ptr, const tools::logger::Ptr &logger_ptr)
     {
         decision_pub =
             nh_.advertise<robot_msg::DecisionMsg>("/sentry/decision", 1);
@@ -41,6 +41,7 @@ namespace sp_decision
         num = 0;
         yaml_reader_ptr_ = std::make_shared<tools::yaml_reader>(ros::package::getPath("sp_decision") + "/config/testv3.yaml");
         blackboard_ptr_ = blackboard_ptr;
+        logger_ptr_ = logger_ptr;
         node_ptr_init(); // 生成决策图
     }
     decision_tree::~decision_tree()
@@ -169,6 +170,10 @@ namespace sp_decision
                     {
                         dt_node.variable_ptr = &blackboard_ptr_->sentry_attackable;
                     }   
+                    if (variable == "buy_bullet_wait_time")
+                    {
+                        dt_node.variable_ptr = &blackboard_ptr_->buy_bullet_wait_time;
+                    }   
                 }
                 nodes_id_vector.push_back(dt_node.id);
                 nodes_vector.push_back(dt_node);
@@ -205,7 +210,10 @@ namespace sp_decision
     }
     tree_node *decision_tree::judge(tree_node *node)
     {
+        std::stringstream log_msg;
+        log_msg << "id:" << node->id;
         std::cout<<node->id<<std::endl;
+        logger_ptr_->logInfo(log_msg);
         if (node->id == 1)
         {
             std::this_thread::sleep_for(std::chrono::milliseconds(50)); // 间隔50ms

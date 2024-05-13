@@ -12,12 +12,12 @@ int main(int argc, char **argv)
     setlocale(LC_CTYPE, "zh_CN.utf8");
     ros::init(argc, argv, "sp_decision_node");
     ros::NodeHandle nh;
-    tools::logger::Ptr logger = std::make_shared<tools::logger>();
-    sp_decision::Blackboard::Ptr blackboard = std::make_shared<sp_decision::Blackboard>(logger);
-    sp_decision::ChassisExecutor::Ptr chassis = std::make_shared<sp_decision::ChassisExecutor>(logger, blackboard);
-    sp_decision::GimbalExecutor::Ptr gimbal = std::make_shared<sp_decision::GimbalExecutor>(logger);
-    sp_decision::ControlNode::Ptr control_node = std::make_shared<sp_decision::ControlNode>(blackboard, logger);
-    sp_decision::decision_tree decison_tree_0(blackboard);
+    tools::logger::Ptr logger_1 = std::make_shared<tools::logger>(1);
+    sp_decision::Blackboard::Ptr blackboard = std::make_shared<sp_decision::Blackboard>(logger_1);
+    sp_decision::ChassisExecutor::Ptr chassis = std::make_shared<sp_decision::ChassisExecutor>(logger_1, blackboard);
+    sp_decision::GimbalExecutor::Ptr gimbal = std::make_shared<sp_decision::GimbalExecutor>(logger_1);
+    sp_decision::ControlNode::Ptr control_node = std::make_shared<sp_decision::ControlNode>(blackboard, logger_1);
+    sp_decision::decision_tree decison_tree_0(blackboard,logger_1);
     decison_tree_0.print_tree();
     decison_tree_0.run_start();
     control_node->run_start();

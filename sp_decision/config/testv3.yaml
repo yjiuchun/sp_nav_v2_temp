@@ -9,7 +9,7 @@ decision_tree_1:
     variable: sentry_hp
     condition:  < 150
     left_id: 3
-    right_id: 4
+    right_id: 17
     action: ""
   - id: 3
     variable: ""
@@ -25,7 +25,7 @@ decision_tree_1:
     action: ""
   - id: 5
     variable: money
-    condition:  "> 300"
+    condition:  "> 450"
     left_id: 15
     right_id: 8
     action: ""
@@ -33,14 +33,14 @@ decision_tree_1:
     variable: on_addblood_area
     condition:  "== 1"
     left_id: 7
-    right_id: 8
+    right_id: 3
     action: ""
   - id: 7
     variable: ""
     condition:  ""
     left_id: 1
     right_id: -1
-    action: "1buy_bullet-1-60-50"
+    action: "1buy_bullet-1-60-50-10"
   - id: 8
     variable: sentry_attackable
     condition:  "== 0"
@@ -87,5 +87,17 @@ decision_tree_1:
     variable: buy_bullet_remain_time
     condition:  "< 1"
     left_id: 6
+    right_id: 16
+    action: ""
+  - id: 16
+    variable: buy_bullet_wait_time
+    condition:  "< 1"
+    left_id: 8
+    right_id: 3
+    action: ""
+  - id: 17
+    variable: match_remainder
+    condition:  "< 300"
+    left_id: 4
     right_id: 8
     action: ""

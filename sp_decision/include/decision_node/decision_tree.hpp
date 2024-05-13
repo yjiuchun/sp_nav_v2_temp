@@ -76,7 +76,7 @@ namespace sp_decision
         double c;
         int num;
         static void sighandler(int signum); // 设置退出函数
-        decision_tree(const sp_decision::Blackboard::Ptr &blackboard_ptr);
+        decision_tree(const sp_decision::Blackboard::Ptr &blackboard_ptr, const tools::logger::Ptr &logger_ptr);
         ~decision_tree();
         void node_ptr_init();              // 生成决策图
         tree_node *judge(tree_node *node); // 执行判断
@@ -92,6 +92,7 @@ namespace sp_decision
         std::thread decision_thread_;
         bool decision_thread_running_;
         sp_decision::Blackboard::Ptr blackboard_ptr_;
+        tools::logger::Ptr logger_ptr_;
         tools::yaml_reader::Ptr yaml_reader_ptr_;
     };
 }

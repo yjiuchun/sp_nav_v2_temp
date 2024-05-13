@@ -1,0 +1,7 @@
+image: /home/rm/sp_nav/src/sp_decision_v2/FAST_LIO/map/nav.pgm
+resolution: 0.050000
+origin: [-10.450000, -17.150000, -nan]
+negate: 0
+occupied_thresh: 0.65
+free_thresh: 0.196
+

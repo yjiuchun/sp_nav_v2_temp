@@ -21,7 +21,7 @@ namespace tools
     class logger
     {
     public:
-        logger()
+        logger(int id)
         {
             char *username = getenv("USER"); // 获取用户名
             auto now = std::chrono::system_clock::now();
@@ -30,7 +30,7 @@ namespace tools
             // 将时间类型转换为struct tm类型，以便获取年、月、日、时、分、秒
             std::tm *now_tm = std::localtime(&now_time);
             std::stringstream ss;
-            ss << "/home/" << username << "/log_decision/" << (now_tm->tm_year + 1900)
+            ss << "/home/" << username << "/log_decision/"<<id<<"/"<< (now_tm->tm_year + 1900)
                << "-" << (now_tm->tm_mon + 1) << "-" << now_tm->tm_mday << "-" << now_tm->tm_hour
                << "-" << now_tm->tm_min << "-" << now_tm->tm_sec << ".txt";
             std::string path = ss.str();

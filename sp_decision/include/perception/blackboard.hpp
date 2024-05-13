@@ -64,6 +64,7 @@ namespace sp_decision
         double on_addblood_area = 0; // 是否在加血区域，用于买弹判断 1:是 0:否
         double buy_bullet_time = 0;         //哨兵上次买弹的比赛时间，用于确定哨兵下一次可以买弹的时间。
         double buy_bullet_remain_time = 0; //允许哨兵下次买弹的倒计时
+        double buy_bullet_wait_time = 0;  //buy bullet wait time
         double sentry_bullet = 400;   //哨兵当前允许发弹量
         double money = 0;              //队伍目前总经济
         double sentry_redeemed_17mm = 0;  //接收下位机发送的哨兵已购买总发弹量。

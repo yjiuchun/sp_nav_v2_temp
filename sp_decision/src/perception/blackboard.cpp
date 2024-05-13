@@ -64,12 +64,19 @@ namespace sp_decision
         sp_decision::Blackboard::match_status.stage_remain_time = msg->stage_remain_time;
         match_remainder = static_cast<double>(sp_decision::Blackboard::match_status.stage_remain_time);
         if(buy_bullet_remain_time>0)
+        {
+            if((buy_bullet_time - match_remainder)>buy_bullet_remain_time)
             {
-                if((buy_bullet_time - match_remainder)>buy_bullet_remain_time)
-                {
-                    buy_bullet_remain_time = 0;
-                }
+                buy_bullet_remain_time = 0;
             }
+        }
+        if(buy_bullet_wait_time>0)
+        {
+            if((buy_bullet_time - match_remainder) > buy_bullet_wait_time)
+            {
+                buy_bullet_wait_time  = 0;
+            }
+        }
         // 判断比赛进程
         if (match_status.game_progress < 4)
         {
@@ -87,8 +94,8 @@ namespace sp_decision
             match_progress = 1;
         }
         //TEST MONEY & BULLET
-        sentry_bullet = msg->target_x;
-        money = msg->target_y;
+        // sentry_bullet = msg->target_x;
+        // money = msg->target_y;
 
         // 检测云台手标点和key，会持续修改1s，防止没检测到
         if (msg->target_x != 0 || msg->target_y != 0 || msg->key != 0)
