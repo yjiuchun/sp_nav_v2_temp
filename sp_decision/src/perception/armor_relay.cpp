@@ -46,9 +46,9 @@ int main(int argc, char **argv)
     }
     while (1)
     { // 接受客户端连接
-        if (server.acceptConnection())
+        if (!server.acceptConnection())
             break;
-        while (ros::ok)
+        while (1)
         {
             std::string receivedData = server.receive();
             std::vector<std::string> splittedData = server.splitString(receivedData, ',');
@@ -66,8 +66,8 @@ int main(int argc, char **argv)
                      src_pose.pose.position.x,
                      src_pose.pose.position.y,
                      src_pose.pose.position.z);
-            if (data.size() == 4)
-                break;
+            // if (data.size() == 4)
+            //     break;
             try
             {
                 geometry_msgs::TransformStamped body2camera_init;

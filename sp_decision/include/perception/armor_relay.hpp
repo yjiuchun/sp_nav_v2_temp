@@ -84,6 +84,7 @@ public:
     bool acceptConnection()
     {
         struct sockaddr_in clientaddr;
+        ROS_INFO("Waiting for connecting");
         socklen_t clientaddrlen = sizeof(clientaddr);
 
         // 接受客户端的连接
