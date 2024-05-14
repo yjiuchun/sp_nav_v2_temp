@@ -55,7 +55,7 @@ decision_tree_1:
     action: ""
   - id: 10
     variable: outpost
-    condition: "< 500"
+    condition: "< 300"
     left_id: 11
     right_id: 12
     action: ""
@@ -79,7 +79,7 @@ decision_tree_1:
     action: ""
   - id: 14
     variable: outpost
-    condition:  "< 800"
+    condition:  "< 600"
     left_id: 11
     right_id: 12
     action: ""

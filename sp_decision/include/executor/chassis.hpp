@@ -52,6 +52,8 @@ namespace sp_decision
             IDLE,
             UPSLOPW,
             ROTATE,
+            NORMALFAST,
+            VERYFAST,
         };
         ChassisExecutor(const tools::logger::Ptr &logger_ptr, const sp_decision::Blackboard::Ptr &blackboard_ptr);
         int send_goal(double pos_x, double pos_y);           // 0为失败，1为进行中，2为成功到达

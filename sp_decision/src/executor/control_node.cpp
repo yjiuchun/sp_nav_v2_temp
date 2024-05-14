@@ -125,7 +125,7 @@ namespace sp_decision
             points.push_back(rt);
             points.push_back(lt);
             chassis_ptr_->robot_state_ = ChassisExecutor::RobotState::SLOW;
-            chassis_ptr_->rotate_state_ = ChassisExecutor::RotateState::ROTATE;
+            chassis_ptr_->rotate_state_ = ChassisExecutor::RotateState::NORMALFAST;
             chassis_ptr_->range_move(points);      // todo 基地前巡逻区范围顶点
 
         }
