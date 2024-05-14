@@ -359,7 +359,7 @@ namespace sp_decision
     void Blackboard::enemy_status_advertise()
     {
         std::stringstream ss; // 向自瞄发送无敌目标
-        ss << "01" << ",11";
+        ss << "0";
         for (int i = 0; i < 6; i++)
         {
             if (enemy_status[i].robot_status == ROBOT_STATUS::revive_10s || enemy_status[i].robot_status == ROBOT_STATUS::revive_3s)
@@ -372,7 +372,7 @@ namespace sp_decision
         {
             ss << "," << enemy_status[7].robot_id;
         }
-        ss << ",1" << ",2" << ",3" << ",";
+        ss << ",";
         robot_msg::EnemyStage enemy__;
         std::string binary_string = ss.str();
         enemy__.ss = binary_string;
