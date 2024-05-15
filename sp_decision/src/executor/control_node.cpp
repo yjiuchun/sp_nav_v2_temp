@@ -132,7 +132,7 @@ namespace sp_decision
         else if (decision_ == "attack")         //增加进攻指令
         {
             chassis_ptr_->send_goal(points_[Point_Yaml::ATTACK].x(),points_[Point_Yaml::ATTACK].y());
-            chassis_ptr_->rotate_state_ = ChassisExecutor::RotateState::UPSLOPW;
+            chassis_ptr_->rotate_state_ = ChassisExecutor::RotateState::ROTATE;
             chassis_ptr_->robot_state_ = ChassisExecutor::RobotState::SLOW;
 
         }

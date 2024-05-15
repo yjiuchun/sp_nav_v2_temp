@@ -78,6 +78,7 @@ namespace sp_decision
          * @brief 基本动作2，原地小陀螺
          */
         void rotate_inplace();
+        void rotate_inplace_range();
         RotateState rotate_state_; // 小陀螺模式
         RobotState robot_state_; // 导航模式
 

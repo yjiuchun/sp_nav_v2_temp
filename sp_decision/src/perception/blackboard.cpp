@@ -370,7 +370,7 @@ namespace sp_decision
         //judje sentry if wudi
         if(enemy_hp[6] > 0)
         {
-            ss << "," << enemy_status[7].robot_id;
+            ss << "," << enemy_status[6].robot_id;
         }
         ss << ",";
         robot_msg::EnemyStage enemy__;

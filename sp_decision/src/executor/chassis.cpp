@@ -225,7 +225,7 @@ namespace sp_decision
             }
             else
             {
-                rotate_inplace();
+                rotate_inplace_range();
                 action_status_ = 1;
             }
             break;
@@ -238,7 +238,7 @@ namespace sp_decision
             }
             else
             {
-                rotate_inplace();
+                rotate_inplace_range();
                 action_status_ = 1;
             }
             break;
@@ -246,7 +246,7 @@ namespace sp_decision
             result = send_goal_dis(last_target[0], last_target[1], 0.3);
             if (result == 0)
             {
-                rotate_inplace();
+                rotate_inplace_range();
                 action_status_ = 1;
             }
             else if (result == 1)
@@ -263,7 +263,7 @@ namespace sp_decision
             ros::Duration time_interval_range = ros::Time::now() - range_wait_time_;
             double time_interval_ms_range = time_interval_range.toSec() * 1000.0; // 计算时间间隔
             wait_time_flag = 1;
-            if(time_interval_ms_range > 3000){
+            if(time_interval_ms_range > 1000){
             action_status_ = 0;
             }
             break;
@@ -325,6 +325,13 @@ namespace sp_decision
     {
         robot_state_ = RobotState::SLOW;
         rotate_state_ = RotateState::ROTATE;
+        send_goal(localization_.pose.pose.position.x, localization_.pose.pose.position.y);
+    }
+    //for range_move
+    void ChassisExecutor::rotate_inplace_range()
+    {
+        robot_state_ = RobotState::SLOW;
+        rotate_state_ = RotateState::NORMALFAST;
         send_goal(localization_.pose.pose.position.x, localization_.pose.pose.position.y);
     }
     // 基本动作3——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————

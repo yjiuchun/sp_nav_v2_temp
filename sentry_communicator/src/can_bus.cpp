@@ -4,7 +4,7 @@
 #define MAX_ANGLE 180.f
 #define MIN_ANGLE -180.f
 
-// #define DEBUG // 调试时打开,防止和虚拟裁判系统冲突
+#define DEBUG // 调试时打开,防止和虚拟裁判系统冲突
 
 namespace sentry_communicator
 {
