@@ -13,7 +13,7 @@ gnome-terminal -- bash -c "rosrun sentry_communicator sentry_communicator "& sle
 
 gnome-terminal -- bash -c "roslaunch sp_decision sp_decision.launch;exec bash"& sleep 1s
 
-gnome-terminal -- bash -c "rosbag record --duration=10 /Team_robot_HP /referee_data /referee_info /robot_shoot /robot_state /rotate_state /sentry/cmd_vel /sentry/decision /localization"& sleep 1s
+gnome-terminal -- bash -c "rosbag record --duration=480 /Team_robot_HP /referee_data /referee_info /robot_shoot /robot_state /rotate_state /sentry/cmd_vel /sentry/decision /localization"& sleep 1s
 
 gnome-terminal -- bash -c "rosrun sp_decision armor_relay;exec bash"
 
